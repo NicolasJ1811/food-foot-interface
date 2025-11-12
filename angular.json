@@ -10,9 +10,19 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "buildTarget": "food-foot-interface:build:production",
+            "baseHref": "/food-foot-interface/"
+          }
+        },
+
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/food-foot-interface",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
