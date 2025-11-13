@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 export enum MealType {
   Breakfast = 'Breakfast',
@@ -13,11 +15,13 @@ export class Meal {
     public type: MealType,
     public isGood: boolean,
     public explanation: string,
-    public emojis: string
+    public emojis: string,
+    public image?: string
   ) {}
 }
 
-const MEALS_DATA: Meal[] = [
+const MEALS_DATA: Meal[] = [];
+const MEALS_DATA2: Meal[] = [
   new Meal(
     'Œuf dur',
     MealType.Breakfast,
@@ -142,11 +146,230 @@ const MEALS_DATA: Meal[] = [
 
 @Component({
   selector: 'app-meals',
-  imports: [MatTableModule],
+  imports: [MatTableModule, CommonModule, FormsModule],
   templateUrl: './meals.html',
   styleUrl: './meals.css',
 })
 export class Meals {
-  displayedColumns: string[] = ['name', 'mealType', 'isGood', 'explanation', 'emojis'];
   dataSource = MEALS_DATA;
+  showAddForm = false;
+  isEditing = false;
+  editingIndex: number | null = null;
+  lastAddedIndex: number | null = null;
+  removingIndex: number | null = null;
+  isDragOver = false;
+  newMeal: Partial<Meal> = {
+    name: '',
+    type: MealType.Breakfast,
+    isGood: true,
+    explanation: '',
+    emojis: '',
+    image: '',
+  };
+
+  openAddForm() {
+    this.showAddForm = true;
+    this.newMeal = {
+      name: '',
+      type: MealType.Breakfast,
+      isGood: true,
+      explanation: '',
+      emojis: '',
+      image: '',
+    };
+    this.isEditing = false;
+    this.editingIndex = null;
+  }
+
+  closeAddForm() {
+    this.showAddForm = false;
+    this.newMeal = {
+      name: '',
+      type: MealType.Breakfast,
+      isGood: true,
+      explanation: '',
+      emojis: '',
+      image: '',
+    };
+    this.isEditing = false;
+    this.editingIndex = null;
+  }
+
+  addMeal() {
+    if (
+      this.newMeal.name &&
+      this.newMeal.type &&
+      this.newMeal.explanation &&
+      this.newMeal.emojis
+    ) {
+      const meal = new Meal(
+        this.newMeal.name,
+        this.newMeal.type as MealType,
+        this.newMeal.isGood || false,
+        this.newMeal.explanation,
+        this.newMeal.emojis,
+        this.newMeal.image
+      );
+      this.dataSource = [...this.dataSource, meal];
+      this.closeAddForm();
+    }
+  }
+
+  async saveMeal() {
+    if (
+      !this.newMeal.name ||
+      !this.newMeal.type ||
+      !this.newMeal.explanation ||
+      !this.newMeal.emojis
+    ) {
+      return;
+    }
+
+    const meal = new Meal(
+      this.newMeal.name,
+      this.newMeal.type as MealType,
+      this.newMeal.isGood || false,
+      this.newMeal.explanation,
+      this.newMeal.emojis,
+      this.newMeal.image
+    );
+
+    if (this.isEditing && this.editingIndex !== null && this.editingIndex >= 0) {
+      // Update existing meal in place
+      this.dataSource[this.editingIndex] = meal;
+      this.dataSource = [...this.dataSource];
+      this.closeAddForm();
+      return;
+    }
+
+    // Not editing: scroll container to bottom first so user can see the end
+    await this.scrollContainerToBottom();
+
+    // Append new meal and animate it
+    this.dataSource = [...this.dataSource, meal];
+    this.lastAddedIndex = this.dataSource.length - 1;
+
+    // After DOM update, ensure the new card is visible (scroll into view)
+    setTimeout(() => {
+      const container = document.querySelector('.meals-container') as HTMLElement | null;
+      if (container) {
+        const cards = container.querySelectorAll('.meal-card');
+        const last = cards[cards.length - 1] as HTMLElement | undefined;
+        if (last) {
+          last.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        } else {
+          // fallback: scroll to bottom
+          container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }
+      }
+    }, 60);
+
+  // Clear the 'new' class after the animation finishes
+  setTimeout(() => (this.lastAddedIndex = null), 1100);
+
+    this.closeAddForm();
+  }
+
+  private scrollContainerToBottom(timeout = 300) {
+    return new Promise<void>(resolve => {
+      const container = document.querySelector('.meals-container') as HTMLElement | null;
+      if (!container) {
+        resolve();
+        return;
+      }
+      // Smooth scroll to bottom first
+      try {
+        container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+      } catch (e) {
+        // some environments may not support smooth option
+        container.scrollTop = container.scrollHeight;
+      }
+      // Wait for the scroll animation to complete (approx)
+      setTimeout(() => resolve(), timeout);
+    });
+  }
+
+  onUpdate(meal: Meal) {
+    // Open the edit form pre-filled for the selected meal
+    this.openEditForm(meal);
+  }
+
+  openEditForm(meal: Meal) {
+    this.isEditing = true;
+    this.showAddForm = true;
+    this.editingIndex = this.dataSource.indexOf(meal);
+    this.newMeal = {
+      name: meal.name,
+      type: meal.type,
+      isGood: meal.isGood,
+      explanation: meal.explanation,
+      emojis: meal.emojis,
+      image: meal.image,
+    };
+  }
+
+  onImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    this.readImageFile(file);
+  }
+
+  private readImageFile(file: File) {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.newMeal.image = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    this.readImageFile(file);
+  }
+
+  removeImage() {
+    if (this.newMeal) {
+      this.newMeal.image = '';
+    }
+  }
+
+  onDelete(meal: Meal) {
+    console.log('Delete meal:', meal);
+    // Animate removal then delete from datasource
+    const index = this.dataSource.indexOf(meal);
+    if (index > -1) {
+      this.removingIndex = index;
+      // wait for animation to finish before removing
+      setTimeout(() => {
+        // remove only if still valid index (items may have shifted)
+        const currentIndex = this.dataSource.indexOf(meal);
+        if (currentIndex > -1) {
+          this.dataSource.splice(currentIndex, 1);
+          this.dataSource = [...this.dataSource]; // Trigger change detection
+        }
+        this.removingIndex = null;
+      }, 740);
+    }
+  }
 }
