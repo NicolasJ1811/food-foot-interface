@@ -20,7 +20,9 @@ export class Meal {
   ) {}
 }
 
-const MEALS_DATA: Meal[] = [];
+const BREAKFASTS: Meal[] = [];
+const LUNCHES: Meal[] = [];
+const DINNERS: Meal[] = [];
 
 // Ignore.
 // const MEALS_DATA2: Meal[] = [
@@ -153,7 +155,9 @@ const MEALS_DATA: Meal[] = [];
   styleUrl: './meals.css',
 })
 export class Meals {
-  dataSource = MEALS_DATA;
+  breakfasts = BREAKFASTS;
+  lunches = LUNCHES;
+  dinners = DINNERS;
   showAddForm = false;
   isEditing = false;
   editingIndex: number | null = null;
@@ -172,7 +176,20 @@ export class Meals {
   };
 
   get filteredMeals(): Meal[] {
-    return this.dataSource.filter(meal => meal.type === this.selectedMealType);
+    switch (this.selectedMealType) {
+      case MealType.Breakfast:
+        return this.breakfasts;
+      case MealType.Lunch:
+        return this.lunches;
+      case MealType.Dinner:
+        return this.dinners;
+      default:
+        return [];
+    }
+  }
+
+  private getCurrentList(): Meal[] {
+    return this.filteredMeals;
   }
 
   openAddForm() {
@@ -218,7 +235,8 @@ export class Meals {
         this.newMeal.emojis,
         this.newMeal.image
       );
-      this.dataSource = [...this.dataSource, meal];
+      const list = this.getCurrentList();
+      list.push(meal);
       this.closeAddForm();
     }
   }
@@ -242,10 +260,11 @@ export class Meals {
       this.newMeal.image
     );
 
+    const currentList = this.getCurrentList();
+
     if (this.isEditing && this.editingIndex !== null && this.editingIndex >= 0) {
       // Update existing meal in place
-      this.dataSource[this.editingIndex] = meal;
-      this.dataSource = [...this.dataSource];
+      currentList[this.editingIndex] = meal;
       this.closeAddForm();
       return;
     }
@@ -254,8 +273,8 @@ export class Meals {
     await this.scrollContainerToBottom();
 
     // Append new meal and animate it
-    this.dataSource = [...this.dataSource, meal];
-    this.lastAddedIndex = this.dataSource.length - 1;
+    currentList.push(meal);
+    this.lastAddedIndex = currentList.length - 1;
 
     // After DOM update, ensure the new card is visible (scroll into view)
     setTimeout(() => {
@@ -305,7 +324,8 @@ export class Meals {
   openEditForm(meal: Meal) {
     this.isEditing = true;
     this.showAddForm = true;
-    this.editingIndex = this.dataSource.indexOf(meal);
+    const currentList = this.getCurrentList();
+    this.editingIndex = currentList.indexOf(meal);
     this.newMeal = {
       name: meal.name,
       type: meal.type,
@@ -365,16 +385,16 @@ export class Meals {
   onDelete(meal: Meal) {
     console.log('Delete meal:', meal);
     // Animate removal then delete from datasource
-    const index = this.dataSource.indexOf(meal);
+    const currentList = this.getCurrentList();
+    const index = currentList.indexOf(meal);
     if (index > -1) {
       this.removingIndex = index;
       // wait for animation to finish before removing
       setTimeout(() => {
         // remove only if still valid index (items may have shifted)
-        const currentIndex = this.dataSource.indexOf(meal);
+        const currentIndex = currentList.indexOf(meal);
         if (currentIndex > -1) {
-          this.dataSource.splice(currentIndex, 1);
-          this.dataSource = [...this.dataSource]; // Trigger change detection
+          currentList.splice(currentIndex, 1);
         }
         this.removingIndex = null;
       }, 740);
