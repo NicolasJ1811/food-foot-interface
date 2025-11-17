@@ -1,0 +1,34 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soccer Ball -->
+  <g id="soccer-ball">
+    <!-- Ball outline -->
+    <circle cx="512" cy="512" r="380" fill="black" stroke="black" stroke-width="20"/>
+    
+    <!-- Ball pentagons and hexagons (soccer ball pattern) -->
+    <g fill="white">
+      <!-- Center pentagon -->
+      <polygon points="512,280 580,340 550,420 474,420 444,340"/>
+      
+      <!-- Surrounding hexagons -->
+      <polygon points="512,180 570,210 600,270 570,330 512,360 454,330 424,270 454,210"/>
+      <polygon points="630,280 688,310 718,370 688,430 630,460 572,430 542,370 572,310"/>
+      <polygon points="512,540 570,570 600,630 570,690 512,720 454,690 424,630 454,570"/>
+      <polygon points="394,280 452,310 482,370 452,430 394,460 336,430 306,370 336,310"/>
+      <polygon points="630,700 688,730 718,790 688,850 630,880 572,850 542,790 572,730"/>
+      <polygon points="394,700 452,730 482,790 452,850 394,880 336,850 306,790 336,730"/>
+    </g>
+  </g>
+  
+  <!-- Apple/Fruit with stem and leaves -->
+  <g id="fruit">
+    <!-- Leaves -->
+    <ellipse cx="480" cy="200" rx="50" ry="80" fill="#00CC00" stroke="black" stroke-width="8" transform="rotate(-30 480 200)"/>
+    <ellipse cx="520" cy="200" rx="50" ry="80" fill="#22DD22" stroke="black" stroke-width="8" transform="rotate(30 520 200)"/>
+    
+    <!-- Stem -->
+    <rect x="495" y="140" width="14" height="80" fill="#8B4513" stroke="black" stroke-width="6"/>
+    
+    <!-- Fruit top (cone/apple) -->
+    <ellipse cx="512" cy="280" rx="70" ry="90" fill="#8B4513" stroke="black" stroke-width="12"/>
+  </g>
+</svg>
