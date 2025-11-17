@@ -19,132 +19,31 @@ export class Meal {
     public image?: string
   ) {}
 }
-
-const MEALS_DATA: Meal[] = [];
-
-// Ignore.
-// const MEALS_DATA2: Meal[] = [
-//   new Meal(
-//     'Œuf dur',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nPuissance et endurance,\nbut assuré !',
-//     '🥚🥖🥅'
-//   ),
-//   new Meal(
-//     "Jus d'orange",
-//     MealType.Breakfast,
-//     false,
-//     'Déconseillé :\nUne gorgée, un sprint…\npuis KO.',
-//     '🍞🧀😴'
-//   ),
-//   new Meal(
-//     'Céréales sucrées',
-//     MealType.Breakfast,
-//     false,
-//     'Déconseillé :\nBeaucoup de sucre,\npeu de passes réussies.',
-//     '🥣🍬❌'
-//   ),
-//   new Meal(
-//     'Céréales chocolatées',
-//     MealType.Breakfast,
-//     false,
-//     'Un but… puis\nchute de sucre !',
-//     '🥣🍫⬇️'
-//   ),
-//   new Meal(
-//     'Lait',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nSolide dans les duels,\nmerci calcium !',
-//     '💪⚽'
-//   ),
-//   new Meal(
-//     'Tartine à la confiture',
-//     MealType.Breakfast,
-//     true,
-//     'Acceptable :\nAccélère vite, mais perd\nle ballon ensuite.',
-//     '🍞🍓➡️😮'
-//   ),
-//   new Meal(
-//     "Jus d'orange pressé",
-//     MealType.Breakfast,
-//     true,
-//     'Acceptable :\nUn tir puissant\nmais courte durée.',
-//     '🍊⚡⏳'
-//   ),
-//   new Meal(
-//     'Porridge',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nIl tient 90 minutes\nsans faiblir !',
-//     '🥣💯⏱️'
-//   ),
-//   new Meal('Café', MealType.Breakfast, false, 'Il sprinte… puis s’écroule !', '⚡➡️🥱'),
-//   new Meal(
-//     'Coca',
-//     MealType.Breakfast,
-//     false,
-//     'Il part vite… et s’éteint\ncomme une canette vide.',
-//     '🥤💥💤'
-//   ),
-//   new Meal(
-//     'Coca Zéro',
-//     MealType.Breakfast,
-//     false,
-//     'Courir à l’aspartame ?\nPas champion ça !',
-//     '🥤🚫⚽️'
-//   ),
-//   new Meal(
-//     'Croissant',
-//     MealType.Breakfast,
-//     false,
-//     'Déconseillé :\nIl tente la bicyclette…\nmais reste coincé au sol.',
-//     '🥐😅'
-//   ),
-//   new Meal(
-//     'Thé glacé (Nestea)',
-//     MealType.Breakfast,
-//     false,
-//     'Déconseillé :\nIl dribble avec du sucre,\npas d’énergie.',
-//     '🍬🤹'
-//   ),
-//   new Meal(
-//     'Salade de fruits',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nDes dribbles vitaminés,\nfrais comme l’orange.',
-//     '🍎⚡🤸'
-//   ),
-//   new Meal(
-//     'Sandwich jambon‑fromage',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nTacles propres,\nénergie sans gras !',
-//     '🥓💪'
-//   ),
-//   new Meal(
-//     'Toast aux radis',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nUne défense béton,\nsolide jusqu’au bout.',
-//     '🥖🥒🧱'
-//   ),
-//   new Meal(
-//     'Yaourt',
-//     MealType.Breakfast,
-//     true,
-//     'Bon :\nMuscles prêts,\nballon bien contrôlé.',
-//     '🦵⚽️'
-//   ),
-//   new Meal(
-//     'Yaourt aux fruits',
-//     MealType.Breakfast,
-//     true,
-//     'Un petit boost…\nmais attention au sucre !',
-//     '🍓⚡'
-//   ),
+const BREAKFAST_MEALS: Meal[] = [];
+// const BREAKFAST_MEALS2: Meal[] = [
+//   new Meal('Œuf dur', MealType.Breakfast, true, 'Bon :\nPuissance et endurance,\nbut assuré !', '🥚🥖🥅'),
+//   new Meal("Jus d'orange", MealType.Breakfast, false, 'Déconseillé :\nUne gorgée, un sprint…\npuis KO.', '🍞🧀😴'),
+//   new Meal('Céréales sucrées', MealType.Breakfast, false, 'Déconseillé :\nBeaucoup de sucre,\npeu de passes réussies.', '🥣🍬❌'),
+//   new Meal('Céréales chocolatées', MealType.Breakfast, false, 'Un but… puis\nchute de sucre !', '🥣🍫⬇️'),
+//   new Meal('Lait', MealType.Breakfast, true, 'Bon :\nSolide dans les duels,\nmerci calcium !', '💪⚽'),
+//   new Meal('Tartine à la confiture', MealType.Breakfast, true, 'Acceptable :\nAccélère vite, mais perd\nle ballon ensuite.', '🍞🍓➡️😮'),
+//   new Meal("Jus d'orange pressé", MealType.Breakfast, true, 'Acceptable :\nUn tir puissant\nmais courte durée.', '🍊⚡⏳'),
+//   new Meal('Porridge', MealType.Breakfast, true, 'Bon :\nIl tient 90 minutes\nsans faiblir !', '🥣💯⏱️'),
+//   new Meal('Café', MealType.Breakfast, false, 'Il sprinte… puis s'écroule !', '⚡➡️🥱'),
+//   new Meal('Coca', MealType.Breakfast, false, 'Il part vite… et s'éteint\ncomme une canette vide.', '🥤💥💤'),
+//   new Meal('Coca Zéro', MealType.Breakfast, false, 'Courir à l'aspartame ?\nPas champion ça !', '🥤🚫⚽️'),
+//   new Meal('Croissant', MealType.Breakfast, false, 'Déconseillé :\nIl tente la bicyclette…\nmais reste coincé au sol.', '🥐😅'),
+//   new Meal('Thé glacé (Nestea)', MealType.Breakfast, false, 'Déconseillé :\nIl dribble avec du sucre,\npas d'énergie.', '🍬🤹'),
+//   new Meal('Salade de fruits', MealType.Breakfast, true, 'Bon :\nDes dribbles vitaminés,\nfrais comme l'orange.', '🍎⚡🤸'),
+//   new Meal('Sandwich jambon‑fromage', MealType.Breakfast, true, 'Bon :\nTacles propres,\nénergie sans gras !', '🥓💪'),
+//   new Meal('Toast aux radis', MealType.Breakfast, true, 'Bon :\nUne défense béton,\nsolide jusqu'au bout.', '🥖🥒🧱'),
+//   new Meal('Yaourt', MealType.Breakfast, true, 'Bon :\nMuscles prêts,\nballon bien contrôlé.', '🦵⚽️'),
+//   new Meal('Yaourt aux fruits', MealType.Breakfast, true, 'Un petit boost…\nmais attention au sucre !', '🍓⚡'),
 // ];
+
+const LUNCH_MEALS: Meal[] = [];
+
+const DINNER_MEALS: Meal[] = [];
 
 @Component({
   selector: 'app-meals',
@@ -153,7 +52,11 @@ const MEALS_DATA: Meal[] = [];
   styleUrl: './meals.css',
 })
 export class Meals {
-  dataSource = MEALS_DATA;
+  breakfastMeals = BREAKFAST_MEALS;
+  lunchMeals = LUNCH_MEALS;
+  dinnerMeals = DINNER_MEALS;
+  activeTab: 'breakfast' | 'lunch' | 'dinner' = 'breakfast';
+  dataSource: Meal[] = BREAKFAST_MEALS;
   showAddForm = false;
   isEditing = false;
   editingIndex: number | null = null;
@@ -169,11 +72,31 @@ export class Meals {
     image: '',
   };
 
+  switchTab(tab: 'breakfast' | 'lunch' | 'dinner') {
+    this.activeTab = tab;
+    if (tab === 'breakfast') {
+      this.dataSource = this.breakfastMeals;
+      this.newMeal.type = MealType.Breakfast;
+    } else if (tab === 'lunch') {
+      this.dataSource = this.lunchMeals;
+      this.newMeal.type = MealType.Lunch;
+    } else {
+      this.dataSource = this.dinnerMeals;
+      this.newMeal.type = MealType.Dinner;
+    }
+    this.resetIndices();
+  }
+
+  private resetIndices() {
+    this.lastAddedIndex = null;
+    this.removingIndex = null;
+  }
+
   openAddForm() {
     this.showAddForm = true;
     this.newMeal = {
       name: '',
-      type: MealType.Breakfast,
+      type: this.getDefaultMealType(),
       isGood: true,
       explanation: '',
       emojis: '',
@@ -183,11 +106,17 @@ export class Meals {
     this.editingIndex = null;
   }
 
+  private getDefaultMealType(): MealType {
+    if (this.activeTab === 'breakfast') return MealType.Breakfast;
+    if (this.activeTab === 'lunch') return MealType.Lunch;
+    return MealType.Dinner;
+  }
+
   closeAddForm() {
     this.showAddForm = false;
     this.newMeal = {
       name: '',
-      type: MealType.Breakfast,
+      type: this.getDefaultMealType(),
       isGood: true,
       explanation: '',
       emojis: '',
@@ -266,8 +195,8 @@ export class Meals {
       }
     }, 60);
 
-  // Clear the 'new' class after the animation finishes
-  setTimeout(() => (this.lastAddedIndex = null), 1100);
+    // Clear the 'new' class after the animation finishes
+    setTimeout(() => (this.lastAddedIndex = null), 1100);
 
     this.closeAddForm();
   }
