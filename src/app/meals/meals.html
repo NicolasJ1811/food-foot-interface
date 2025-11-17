@@ -2,24 +2,6 @@
   +
 </button>
 
-<div class="filter-section">
-  <div class="filter-controls">
-    <label class="filter-label">Afficher:</label>
-    <div class="radio-group">
-      <label class="radio-label" *ngFor="let type of mealTypes">
-        <input 
-          type="radio" 
-          name="mealType" 
-          [value]="type" 
-          [(ngModel)]="selectedMealType"
-          class="radio-input"
-        />
-        <span class="radio-text">{{ type }}</span>
-      </label>
-    </div>
-  </div>
-</div>
-
 <div *ngIf="showAddForm" class="modal-overlay" (click)="closeAddForm()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h2>{{ isEditing ? 'Modifier le repas' : 'Ajouter un nouveau repas' }}</h2>
@@ -133,44 +115,140 @@
   </div>
 </div>
 
-  <div class="meals-container">
-  <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
-    [class.new]="i === lastAddedIndex"
-    [class.removing]="i === removingIndex">
-    <div class="card-header">
-      <h2>{{ meal.name }}</h2>
-      <div class="card-actions">
-        <button class="action-btn edit-btn" (click)="openEditForm(meal)" title="Modifier">
-          ✏️
-        </button>
-        <button class="action-btn delete-btn" (click)="onDelete(meal)" title="Supprimer">
-          🗑️
-        </button>
+<mat-tab-group 
+  [(selectedIndex)]="selectedTabIndex" 
+  (selectedIndexChange)="onTabChange($event)"
+  class="meals-tabs"
+  animationDuration="300">
+  <mat-tab label="Petit-déjeuner">
+    <div class="meals-container">
+      <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
+        [class.new]="i === lastAddedIndex"
+        [class.removing]="i === removingIndex">
+        <div class="card-header">
+          <h2>{{ meal.name }}</h2>
+          <div class="card-actions">
+            <button class="action-btn edit-btn" (click)="openEditForm(meal)" title="Modifier">
+              ✏️
+            </button>
+            <button class="action-btn delete-btn" (click)="onDelete(meal)" title="Supprimer">
+              🗑️
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="content-text">
+            <div class="info-row">
+              <span class="label">Type:</span>
+              <span class="value">{{ meal.type }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Bon repas:</span>
+              <span class="value" [class.good]="meal.isGood" [class.bad]="!meal.isGood">
+                {{ meal.isGood ? 'Oui ✅' : 'Non ❌' }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="label">Explication:</span>
+              <span class="value explanation">{{ meal.explanation }}</span>
+            </div>
+          </div>
+          <div class="image-wrap" *ngIf="meal.image">
+            <img class="meal-image" [src]="meal.image" alt="{{ meal.name }}" />
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="emojis">{{ meal.emojis }}</div>
+        </div>
       </div>
     </div>
-    <div class="card-content">
-      <div class="content-text">
-        <div class="info-row">
-          <span class="label">Type:</span>
-          <span class="value">{{ meal.type }}</span>
+  </mat-tab>
+
+  <mat-tab label="Déjeuner">
+    <div class="meals-container">
+      <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
+        [class.new]="i === lastAddedIndex"
+        [class.removing]="i === removingIndex">
+        <div class="card-header">
+          <h2>{{ meal.name }}</h2>
+          <div class="card-actions">
+            <button class="action-btn edit-btn" (click)="openEditForm(meal)" title="Modifier">
+              ✏️
+            </button>
+            <button class="action-btn delete-btn" (click)="onDelete(meal)" title="Supprimer">
+              🗑️
+            </button>
+          </div>
         </div>
-        <div class="info-row">
-          <span class="label">Bon repas:</span>
-          <span class="value" [class.good]="meal.isGood" [class.bad]="!meal.isGood">
-            {{ meal.isGood ? 'Oui ✅' : 'Non ❌' }}
-          </span>
+        <div class="card-content">
+          <div class="content-text">
+            <div class="info-row">
+              <span class="label">Type:</span>
+              <span class="value">{{ meal.type }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Bon repas:</span>
+              <span class="value" [class.good]="meal.isGood" [class.bad]="!meal.isGood">
+                {{ meal.isGood ? 'Oui ✅' : 'Non ❌' }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="label">Explication:</span>
+              <span class="value explanation">{{ meal.explanation }}</span>
+            </div>
+          </div>
+          <div class="image-wrap" *ngIf="meal.image">
+            <img class="meal-image" [src]="meal.image" alt="{{ meal.name }}" />
+          </div>
         </div>
-        <div class="info-row">
-          <span class="label">Explication:</span>
-          <span class="value explanation">{{ meal.explanation }}</span>
+        <div class="card-footer">
+          <div class="emojis">{{ meal.emojis }}</div>
         </div>
       </div>
-      <div class="image-wrap" *ngIf="meal.image">
-        <img class="meal-image" [src]="meal.image" alt="{{ meal.name }}" />
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Dîner">
+    <div class="meals-container">
+      <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
+        [class.new]="i === lastAddedIndex"
+        [class.removing]="i === removingIndex">
+        <div class="card-header">
+          <h2>{{ meal.name }}</h2>
+          <div class="card-actions">
+            <button class="action-btn edit-btn" (click)="openEditForm(meal)" title="Modifier">
+              ✏️
+            </button>
+            <button class="action-btn delete-btn" (click)="onDelete(meal)" title="Supprimer">
+              🗑️
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="content-text">
+            <div class="info-row">
+              <span class="label">Type:</span>
+              <span class="value">{{ meal.type }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Bon repas:</span>
+              <span class="value" [class.good]="meal.isGood" [class.bad]="!meal.isGood">
+                {{ meal.isGood ? 'Oui ✅' : 'Non ❌' }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="label">Explication:</span>
+              <span class="value explanation">{{ meal.explanation }}</span>
+            </div>
+          </div>
+          <div class="image-wrap" *ngIf="meal.image">
+            <img class="meal-image" [src]="meal.image" alt="{{ meal.name }}" />
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="emojis">{{ meal.emojis }}</div>
+        </div>
       </div>
     </div>
-    <div class="card-footer">
-      <div class="emojis">{{ meal.emojis }}</div>
-    </div>
-  </div>
-</div>
+  </mat-tab>
+</mat-tab-group>

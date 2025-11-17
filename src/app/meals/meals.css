@@ -56,6 +56,29 @@
   font-weight: 600;
 }
 
+/* Material Tabs Styling */
+.meals-tabs {
+  background: #fff;
+}
+
+.meals-tabs ::ng-deep .mat-mdc-tab-labels {
+  background: linear-gradient(135deg, #f5f5f5, #fafafa);
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.meals-tabs ::ng-deep .mat-mdc-tab {
+  color: #555;
+  font-weight: 500;
+}
+
+.meals-tabs ::ng-deep .mat-mdc-tab.mat-mdc-tab-active {
+  color: #1976d2;
+}
+
+.meals-tabs ::ng-deep .mdc-tab__content {
+  padding: 0;
+}
+
 .meals-container {
   display: grid;
   grid-template-columns: 1fr;

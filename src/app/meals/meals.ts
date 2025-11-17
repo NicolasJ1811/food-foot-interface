@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -150,7 +151,7 @@ const DINNERS: Meal[] = [];
 
 @Component({
   selector: 'app-meals',
-  imports: [MatTableModule, CommonModule, FormsModule],
+  imports: [MatTableModule, MatTabsModule, CommonModule, FormsModule],
   templateUrl: './meals.html',
   styleUrl: './meals.css',
 })
@@ -165,6 +166,7 @@ export class Meals {
   removingIndex: number | null = null;
   isDragOver = false;
   selectedMealType: MealType = MealType.Breakfast;
+  selectedTabIndex = 0;
   mealTypes = Object.values(MealType);
   newMeal: Partial<Meal> = {
     name: '',
@@ -190,6 +192,12 @@ export class Meals {
 
   private getCurrentList(): Meal[] {
     return this.filteredMeals;
+  }
+
+  onTabChange(index: number) {
+    const mealTypeArray = Object.values(MealType);
+    this.selectedMealType = mealTypeArray[index];
+    this.selectedTabIndex = index;
   }
 
   openAddForm() {
