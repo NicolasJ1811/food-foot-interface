@@ -169,18 +169,29 @@
   }
 
   .header {
-    background: white;
+    background: linear-gradient(135deg, #d4e8dd, #c8e0d0);
     padding: 1rem;
-    box-shadow: none;
-    border-bottom: 1px solid #e8e8e8;
-    text-align: center;
+    box-shadow: 0 2px 8px rgba(27, 94, 58, 0.1);
+    border-bottom: 3px solid #27ae60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
     flex-shrink: 0;
     position: relative;
     z-index: 10;
   }
 
+  .header-logo {
+    height: 50px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
   .header h1 {
     margin: 0;
+    color: #1b5e3a;
+    font-size: 1.75rem;
   }
 
   .content-area {
@@ -206,6 +217,7 @@
 
 <main class="main">
   <div class="header">
+    <img src="food-foot-logo.png" alt="Food Foot Logo" class="header-logo" />
     <h1>Tableau de bord Coach</h1>
   </div>
   <div class="content-area">

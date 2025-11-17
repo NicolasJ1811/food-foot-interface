@@ -1,7 +1,7 @@
 .filter-section {
   padding: 1.5rem;
-  background: linear-gradient(135deg, #f5f5f5, #fafafa);
-  border-bottom: 2px solid #e0e0e0;
+  background: linear-gradient(135deg, #d4e8dd, #c8e0d0);
+  border-bottom: 3px solid #27ae60;
   position: sticky;
   top: 0;
   z-index: 40;
@@ -36,7 +36,7 @@
 
 .radio-input {
   cursor: pointer;
-  accent-color: #2196f3;
+  accent-color: #27ae60;
   width: 18px;
   height: 18px;
 }
@@ -48,17 +48,17 @@
 }
 
 .radio-label:hover .radio-text {
-  color: #2196f3;
+  color: #27ae60;
 }
 
 .radio-label input:checked + .radio-text {
-  color: #1976d2;
+  color: #229954;
   font-weight: 600;
 }
 
 /* Material Tabs Styling */
 .meals-tabs {
-  background: #fff;
+  background: #e8f1ec;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -66,9 +66,9 @@
 }
 
 .meals-tabs ::ng-deep .mat-mdc-tab-labels {
-  background: linear-gradient(135deg, #f5f5f5, #fafafa);
-  border-bottom: none;
-  box-shadow: none;
+  background: linear-gradient(135deg, #d4e8dd, #c8e0d0);
+  border-bottom: 2px solid #27ae60;
+  box-shadow: 0 2px 4px rgba(27, 94, 58, 0.1);
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -81,7 +81,7 @@
 }
 
 .meals-tabs ::ng-deep .mat-mdc-tab.mat-mdc-tab-active {
-  color: #1976d2;
+  color: #27ae60;
 }
 
 .meals-tabs ::ng-deep .mdc-tab__content {
@@ -117,13 +117,13 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2196f3, #1976d2);
+  background: linear-gradient(135deg, #27ae60, #1e8449);
   color: white;
   border: none;
   font-size: 2rem;
   font-weight: 300;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
   transition: all 0.3s ease;
   z-index: 50;
   display: flex;
@@ -132,7 +132,7 @@
 }
 
 .fab:hover {
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.6);
   transform: scale(1.1);
 }
 
@@ -165,7 +165,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: #e8f1ec;
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
@@ -174,6 +174,7 @@
   overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
+  border: 2px solid #d4e8dd;
 }
 
 @keyframes slideUp {
@@ -213,12 +214,13 @@
 .form-group textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #c8e0d0;
   border-radius: 6px;
   font-size: 0.95rem;
   font-family: inherit;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+  background: #f0f8f4;
 }
 
 .form-group input[type="text"]:focus,
@@ -226,8 +228,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #2196f3;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
 }
 
 .form-group textarea {
@@ -254,7 +256,7 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #2196f3;
+  accent-color: #27ae60;
 }
 
 .form-actions {
@@ -294,20 +296,21 @@
 }
 
 .btn-cancel {
-  background: #f5f5f5;
-  color: #555;
+  background: #d4e8dd;
+  color: #1b5e3a;
   flex: 1;
+  border: 2px solid #c8e0d0;
 }
 
 .btn-cancel:hover {
-  background: #eeeeee;
+  background: #c8e0d0;
 }
 
 .meal-card {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: #e8f1ec;
+  border: 2px solid #c8e0d0;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(27, 94, 58, 0.15);
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   display: grid;
@@ -363,7 +366,7 @@
 
 .card-header {
   padding: 1rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid #c8e0d0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -439,8 +442,8 @@
 
 .card-footer {
   padding: 0.75rem 1rem;
-  background: #f9f9f9;
-  border-top: 1px solid #f0f0f0;
+  background: #d4e8dd;
+  border-top: 2px solid #c8e0d0;
 }
 
 .emojis {
@@ -469,10 +472,11 @@
   bottom: 0;
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(232, 241, 236, 1) 0%,
+    rgba(232, 241, 236, 0.8) 30%,
+    rgba(232, 241, 236, 0) 100%
   );
-  mix-blend-mode: screen;
+  mix-blend-mode: multiply;
   pointer-events: none; /* allow clicks through the overlay */
 }
 
@@ -494,17 +498,17 @@
   width: 72px;
   height: 72px;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d4e8dd;
 }
 
 /* Drag-and-drop image upload area */
 .image-upload-area {
   position: relative;
-  border: 2px dashed #2196f3;
+  border: 2px dashed #27ae60;
   border-radius: 8px;
   padding: 2rem 1rem;
   text-align: center;
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(33, 150, 243, 0.02));
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.05), rgba(39, 174, 96, 0.02));
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -517,14 +521,14 @@
 }
 
 .image-upload-area:hover {
-  border-color: #1976d2;
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+  border-color: #1e8449;
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));
 }
 
 .image-upload-area.drag-over {
-  border-color: #1976d2;
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(33, 150, 243, 0.1));
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  border-color: #1e8449;
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(39, 174, 96, 0.1));
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
   transform: scale(1.01);
 }
 
@@ -571,7 +575,7 @@
   height: 120px;
   object-fit: cover;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d4e8dd;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -605,13 +609,13 @@
 }
 
 .btn-change {
-  background: #2196f3;
+  background: #27ae60;
   color: white;
 }
 
 .btn-change:hover {
-  background: #1976d2;
-  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+  background: #1e8449;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
 }
 
 .action-btn {
@@ -631,7 +635,7 @@
 }
 
 .edit-btn {
-  color: #2196f3;
+  color: #27ae60;
 }
 
 .delete-btn {
@@ -649,6 +653,10 @@
   /* revert cards to stacked layout on small screens */
   .meal-card {
     display: block;
+  }
+
+  .card-content {
+    gap: 0;
   }
 
   .card-header h2 {
