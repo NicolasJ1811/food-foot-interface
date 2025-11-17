@@ -160,6 +160,8 @@ export class Meals {
   lastAddedIndex: number | null = null;
   removingIndex: number | null = null;
   isDragOver = false;
+  selectedMealType: MealType = MealType.Breakfast;
+  mealTypes = Object.values(MealType);
   newMeal: Partial<Meal> = {
     name: '',
     type: MealType.Breakfast,
@@ -169,11 +171,15 @@ export class Meals {
     image: '',
   };
 
+  get filteredMeals(): Meal[] {
+    return this.dataSource.filter(meal => meal.type === this.selectedMealType);
+  }
+
   openAddForm() {
     this.showAddForm = true;
     this.newMeal = {
       name: '',
-      type: MealType.Breakfast,
+      type: this.selectedMealType,
       isGood: true,
       explanation: '',
       emojis: '',
