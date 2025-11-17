@@ -162,6 +162,7 @@ export class Meals {
   showAddForm = false;
   isEditing = false;
   editingIndex: number | null = null;
+  editingMealType: MealType | null = null;
   lastAddedIndex: number | null = null;
   removingIndex: number | null = null;
   isDragOver = false;
@@ -192,6 +193,19 @@ export class Meals {
 
   private getCurrentList(): Meal[] {
     return this.filteredMeals;
+  }
+
+  private getListForMealType(type: MealType): Meal[] {
+    switch (type) {
+      case MealType.Breakfast:
+        return this.breakfasts;
+      case MealType.Lunch:
+        return this.lunches;
+      case MealType.Dinner:
+        return this.dinners;
+      default:
+        return [];
+    }
   }
 
   onTabChange(index: number) {
@@ -226,6 +240,7 @@ export class Meals {
     };
     this.isEditing = false;
     this.editingIndex = null;
+    this.editingMealType = null;
   }
 
   addMeal() {
@@ -268,21 +283,53 @@ export class Meals {
       this.newMeal.image
     );
 
-    const currentList = this.getCurrentList();
+    if (this.isEditing && this.editingIndex !== null && this.editingIndex >= 0 && this.editingMealType) {
+      const targetList = this.getListForMealType(this.newMeal.type as MealType);
+      
+      // If meal type stayed the same, update in place
+      if (this.newMeal.type === this.editingMealType) {
+        targetList[this.editingIndex] = meal;
+        this.closeAddForm();
+        return;
+      }
 
-    if (this.isEditing && this.editingIndex !== null && this.editingIndex >= 0) {
-      // Update existing meal in place
-      currentList[this.editingIndex] = meal;
+      // If meal type changed, remove from old list and add to new list
+      const oldList = this.getListForMealType(this.editingMealType);
+      oldList.splice(this.editingIndex, 1);
+      targetList.push(meal);
+
+      // Switch to the new tab and scroll to bottom
+      const mealTypeArray = Object.values(MealType);
+      const tabIndex = mealTypeArray.indexOf(this.newMeal.type as MealType);
+      this.selectedTabIndex = tabIndex;
+      this.selectedMealType = this.newMeal.type as MealType;
+
+      // Wait for the view to update, then scroll to bottom
+      setTimeout(() => {
+        const container = document.querySelector('.tab-scroll-wrapper') as HTMLElement | null;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      }, 50);
+
       this.closeAddForm();
       return;
     }
+
+    const targetList = this.getListForMealType(this.newMeal.type as MealType);
 
     // Not editing: scroll container to bottom first so user can see the end
     await this.scrollContainerToBottom();
 
     // Append new meal and animate it
-    currentList.push(meal);
-    this.lastAddedIndex = currentList.length - 1;
+    targetList.push(meal);
+    this.lastAddedIndex = targetList.length - 1;
+
+    // Switch to the tab of the meal type that was just added
+    const mealTypeArray = Object.values(MealType);
+    const tabIndex = mealTypeArray.indexOf(this.newMeal.type as MealType);
+    this.selectedTabIndex = tabIndex;
+    this.selectedMealType = this.newMeal.type as MealType;
 
     // After DOM update, ensure the new card is visible (scroll into view)
     setTimeout(() => {
@@ -334,6 +381,7 @@ export class Meals {
     this.showAddForm = true;
     const currentList = this.getCurrentList();
     this.editingIndex = currentList.indexOf(meal);
+    this.editingMealType = meal.type;
     this.newMeal = {
       name: meal.name,
       type: meal.type,

@@ -115,13 +115,13 @@
   </div>
 </div>
 
-<mat-tab-group 
+<mat-tab-group animationDuration="0ms"
   [(selectedIndex)]="selectedTabIndex" 
   (selectedIndexChange)="onTabChange($event)"
-  class="meals-tabs"
-  animationDuration="300">
+  class="meals-tabs">
   <mat-tab label="Petit-déjeuner">
-    <div class="meals-container">
+    <div class="tab-scroll-wrapper">
+      <div class="meals-container">
       <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
         [class.new]="i === lastAddedIndex"
         [class.removing]="i === removingIndex">
@@ -160,12 +160,14 @@
         <div class="card-footer">
           <div class="emojis">{{ meal.emojis }}</div>
         </div>
+      </div>
       </div>
     </div>
   </mat-tab>
 
   <mat-tab label="Déjeuner">
-    <div class="meals-container">
+    <div class="tab-scroll-wrapper">
+      <div class="meals-container">
       <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
         [class.new]="i === lastAddedIndex"
         [class.removing]="i === removingIndex">
@@ -205,11 +207,13 @@
           <div class="emojis">{{ meal.emojis }}</div>
         </div>
       </div>
+      </div>
     </div>
   </mat-tab>
 
   <mat-tab label="Dîner">
-    <div class="meals-container">
+    <div class="tab-scroll-wrapper">
+      <div class="meals-container">
       <div class="meal-card" *ngFor="let meal of filteredMeals; let i = index"
         [class.new]="i === lastAddedIndex"
         [class.removing]="i === removingIndex">
@@ -248,6 +252,7 @@
         <div class="card-footer">
           <div class="emojis">{{ meal.emojis }}</div>
         </div>
+      </div>
       </div>
     </div>
   </mat-tab>
